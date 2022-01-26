@@ -5,9 +5,11 @@ namespace com.mobiquity.packer.test
     public class PackageItemTests
     {
         [Test]
-        public void PackageItem_EmptyParam_Throws()
+        [TestCase(null)]
+        [TestCase("")]
+        public void PackageItem_EmptyParam_Throws(string input)
         {
-            Assert.Throws<APIException>(() => new PackageItemModel(null));
+            Assert.Throws<APIException>(() => new PackageItemModel(input));
         }
 
         [Test]
@@ -19,6 +21,16 @@ namespace com.mobiquity.packer.test
             Assert.AreEqual(15.3, package.Weight);
             Assert.AreEqual(34, package.Cost);
         }
-
+        [Test]
+        [TestCase("(B,15.3,€34)")]
+        [TestCase("(1,15%3,€34)")]
+        [TestCase("(1,15.3,$€34)")]
+        [TestCase("(1,15.3,$)")]
+        [TestCase("(1,15.3)")]
+        [TestCase("(1,15.3,€34,24)")]
+        public void PackageItem_BadParam_Throws(string input)
+        {
+            Assert.Throws<APIException>(() => new PackageItemModel(input));
+        }
     }
 }

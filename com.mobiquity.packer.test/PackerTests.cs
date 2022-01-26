@@ -1,26 +1,28 @@
 using NUnit.Framework;
+using System;
 
 namespace com.mobiquity.packer.test
 {
     public class PackerTests
     {
+        string inputPath = string.Empty;
         [SetUp]
         public void Setup()
         {
+            inputPath = Environment.CurrentDirectory + @"\..\..\..\TestFiles\example_input";
         }
 
         [Test]
-        public void Pack_EmptyParam_ReturnsEmptyString()
+        [TestCase(null)]
+        [TestCase("")]
+        public void Pack_EmptyParam_Throws(string input)
         {
-            Assert.AreEqual(string.Empty, Packer.Pack(string.Empty));
+            Assert.Throws<APIException>(() => Packer.Pack(input));
         }
         [Test]
         public void Pack_SingleLineWithEnoughSpace_ReturnsId()
         {
-            var input = "8 : (1,15.3,€34)";
-            var expectedResult = "8";
-
-            Assert.AreEqual(expectedResult, Packer.Pack(input));
+            Assert.AreEqual("", Packer.Pack(inputPath));
         }
     }
 }

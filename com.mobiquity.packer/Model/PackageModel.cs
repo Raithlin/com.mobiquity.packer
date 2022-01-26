@@ -22,11 +22,10 @@ namespace com.mobiquity.packer
                 throw new APIException($"Invalid package weight: {weightInput}");
 
             PackageWeight = packageWeight;
-
-            foreach (var line in input.Split('\n'))
+            var line = input.Split(':')[1].Trim();
+            foreach (var item in line.Split(" (", StringSplitOptions.RemoveEmptyEntries & StringSplitOptions.TrimEntries))
             {
-                if (!line.Contains(':')) throw new APIException($"Invalid format: {line}");
-                Items.Add(new PackageItemModel(line.Split(':')[1].Trim()));
+                Items.Add(new PackageItemModel(item));
             }
         }
     }
