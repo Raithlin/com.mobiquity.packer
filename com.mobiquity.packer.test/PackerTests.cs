@@ -9,7 +9,7 @@ namespace com.mobiquity.packer.test
         [SetUp]
         public void Setup()
         {
-            inputPath = Environment.CurrentDirectory + @"\..\..\..\TestFiles\example_input";
+            inputPath = Environment.CurrentDirectory + @"\..\..\..\TestFiles\";
         }
 
         [Test]
@@ -20,9 +20,16 @@ namespace com.mobiquity.packer.test
             Assert.Throws<APIException>(() => Packer.Pack(input));
         }
         [Test]
-        public void Pack_SingleLineWithEnoughSpace_ReturnsId()
+        public void Pack_EmptyFile_Throws()
         {
-            Assert.AreEqual("", Packer.Pack(inputPath));
+            Assert.Throws<APIException>(() => Packer.Pack($"{inputPath}empty_input"));
         }
+
+        [Test]
+        public void Pack_FileDoesNotExist_Throws()
+        {
+            Assert.Throws<APIException>(() => Packer.Pack($"{inputPath}bad_input"));
+        }
+
     }
 }
