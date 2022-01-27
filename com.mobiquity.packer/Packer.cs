@@ -18,7 +18,7 @@ namespace com.mobiquity.packer
             foreach (var package in packages)
             {
                 if (package.PackagesToSend.Count > 0)
-                    output.Add(string.Join(',', package.PackagesToSend));
+                    output.Add(string.Join(',', () => package.PackagesToSend));
                 else
                     output.Add("-");
             }

@@ -26,10 +26,5 @@
                 Items.Add(new PackageItemModel(item));
             }
         }
-
-        public void DeterminePackagesToInclude()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
