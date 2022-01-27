@@ -31,5 +31,15 @@ namespace com.mobiquity.packer.test
             Assert.Throws<APIException>(() => Packer.Pack($"{inputPath}bad_input"));
         }
 
+        [Test]
+        public void Pack_TestFile_Returns()
+        {
+            string expectedResult = System.IO.File.ReadAllText($"{inputPath}example_output");
+
+            string result = Packer.Pack($"{inputPath}example_input");
+            
+            Assert.AreEqual(expectedResult, result);
+        }
+
     }
 }
