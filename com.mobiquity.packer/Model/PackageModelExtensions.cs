@@ -8,7 +8,12 @@ namespace com.mobiquity.packer
 {
     public static class PackageModelExtensions
     {
-        public static void DeterminePackagesToInclude(this PackageModel package)
+        /// <summary>
+        /// Determines the best mix of items to include in the package
+        /// Items are selected based on Cost (desc) and Weight (asc)
+        /// </summary>
+        /// <param name="package">The package</param>
+        public static void DetermineItemsToInclude(this PackageModel package)
         {
             var items = package.Items.OrderByDescending(x => x.Cost).ThenBy(x => x.Weight).ToList();
 
@@ -17,12 +22,12 @@ namespace com.mobiquity.packer
             {
                 if (item.Weight + currentWeight == package.PackageWeight)
                 {
-                    package.PackagesToSend.Add(item.Index);
+                    package.ItemsToSend.Add(item.Index);
                     break;
                 }
                 else if (item.Weight + currentWeight < package.PackageWeight)
                 {
-                    package.PackagesToSend.Add(item.Index);
+                    package.ItemsToSend.Add(item.Index);
                     currentWeight += item.Weight;
                 }
             }

@@ -32,5 +32,19 @@ namespace com.mobiquity.packer.test
         {
             Assert.Throws<APIException>(() => new PackageItemModel(input));
         }
+
+        [Test]
+        public void PackageItem_WeightMoreThan100_Throws()
+        {
+            var input = "(1,100.1,€34)";
+            Assert.Throws<APIException>(() => new PackageItemModel(input));
+        }
+
+        [Test]
+        public void PackageItem_CostMoreThan100_Throws()
+        {
+            var input = "(1,12,€100.01)";
+            Assert.Throws<APIException>(() => new PackageItemModel(input));
+        }
     }
 }
